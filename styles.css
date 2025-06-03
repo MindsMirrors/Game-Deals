@@ -43,6 +43,15 @@ h3 {
 
 .click {
     cursor: pointer;
+    transition: all 300ms ease;
+}
+
+.click:hover {
+    transform: scale(1.1);
+}
+
+.click:active {
+    transform: scale(0.8);
 }
 
 button {
@@ -76,22 +85,12 @@ section {
     background-color: #242424;
 }
 
-.dark-theme #personal-logo {
+.dark-theme .sponsor__logo--img {
     filter: none;
 }
 
-.dark-theme .scroll__icon {
-    border-color: white;
-}
-
-.dark-theme .scroll__icon:after,
 .dark-theme .nav__link--hover-effect:after {
     background-color: white;
-}
-
-.dark-theme .mail__btn {
-    background-color: white;
-    color: #242424;
 }
 
 /*
@@ -301,12 +300,8 @@ section {
 }
 
 .sponsor__logo--img {
-    width: 40px;
-    height: 40px;
-}
-
-.sponsor__logo--title {
-    height: 28px;
+    filter: invert(1);
+    cursor: pointer;
 }
 
 .header__container {
@@ -368,6 +363,10 @@ section {
 .input__btn:hover {
     border: 1px solid #38bdf8;
     background-color: #38bdf8;
+}
+
+.input__btn:active {
+    transform: translateY(2px);
 }
 
 .header__img--wrapper {
