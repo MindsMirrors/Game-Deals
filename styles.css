@@ -76,13 +76,22 @@ section {
 .dark-theme .fa-bars,
 .dark-theme .fa-circle-half-stroke,
 .dark-theme .btn__menu--close,
-.dark-theme .menu__link {
+.dark-theme .menu__link,
+.dark-theme .fa-spinner,
+.dark-theme .game__title,
+.dark-theme .game__platform,
+.dark-theme .game__developer,
+.dark-theme .game__release-date,
+.dark-theme .fa-window-maximize,
+.dark-theme .fa-windows {
     color: white;
 }
 
 .dark-theme section,
-.dark-theme .menu__backdrop {
+.dark-theme .menu__backdrop,
+.dark-theme {
     background-color: #242424;
+    transition: all 300ms ease;
 }
 
 .dark-theme .sponsor__logo--img {
@@ -91,6 +100,16 @@ section {
 
 .dark-theme .nav__link--hover-effect:after {
     background-color: white;
+}
+
+.container {
+    padding: 56px;
+}
+
+.row {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 /*
@@ -483,7 +502,7 @@ select {
 }
 
 .games__loading--spinner {
-    /* display: none !important; */
+    display: none !important;
 }
 
 .games__loading .games__loading--spinner {
@@ -492,6 +511,47 @@ select {
 
 .fa-spinner {
   animation: rotate 600ms infinite linear;
+}
+
+.games {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.game {
+    width: calc(100% / 3);
+    padding: 24px;
+}
+
+.game__img--wrapper {
+    margin-bottom: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+}
+
+.game__title-platform {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.game__title,
+.game__platform {
+    font-size: 24px;
+}
+
+.game__dev-release {
+    margin-bottom: 8px;
+}
+
+.game__developer {
+    font-size: 20px;
+    margin-bottom: 4px;
+}
+
+.game__release-date {
+    font-size: 16px;
 }
 
 @keyframes rotate {

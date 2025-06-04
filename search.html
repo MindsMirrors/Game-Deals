@@ -42,13 +42,10 @@
                 </button>
                 <ul class="menu__links">
                     <li class="menu__list">
-                        <a href="#" class="menu__link" onclick="closeMenu()">Home</a>
+                        <a href="./index.html" class="menu__link" onclick="closeMenu()">Home</a>
                     </li>
                     <li class="menu__list">
                         <a class="menu__link no-cursor" onclick="closeMenu()">Contact</a>
-                    </li>
-                    <li class="menu__list">
-                        <a href="./search.html" class="menu__link menu__link--primary">Search Games</a>
                     </li>
                     <li class="menu__list click" onclick="toggleContrast()">
                         <a href="#"class="">
@@ -71,7 +68,7 @@
         <div class="header__description">
             <h2 class="search__description">Browse Games</h2>
             <div class="input__wrapper">
-                <input class="input__area" type="text" placeholder="Search by Genre or Keyword">
+                <input class="input__area" type="text" placeholder="Search by Game Genre">
                 <button class="input__btn">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
@@ -85,13 +82,13 @@
                     <div class="games__header">
                         <h2>Top Results:</h2>
                          <select id="filter" onchange="filterGames(event)">
-                            <option value="" disabled selected>Platform</option>
-                            <option value="ALL">All</option>
+                            <option value="" disabled selected>Sort</option>
                             <option value="BROWSER">Browser</option>
                             <option value="PC">PC</option>
+                            <option value="RECENT">Most Recent</option>
                         </select>
                     </div>
-                    <div class="games games__loading">
+                    <div class="games">
                         <i class="fa-solid fa-spinner games__loading--spinner"></i>
                     </div>
                 </div>
@@ -116,4 +113,5 @@
         </div>
     </div>
 </footer>
+<script src="search.js"></script>
 </html>
