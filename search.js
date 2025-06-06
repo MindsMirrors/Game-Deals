@@ -1,4 +1,3 @@
-const url = 'https://free-to-play-games-database.p.rapidapi.com/api/games';
 const options = {
 	method: 'GET',
 	headers: {
@@ -6,30 +5,47 @@ const options = {
 		'x-rapidapi-host': 'free-to-play-games-database.p.rapidapi.com'
 	}
 };
+const urlAll = 'https://free-to-play-games-database.p.rapidapi.com/api/games';
+const urlPlatform = 'https://free-to-play-games-database.p.rapidapi.com/api/games?platform=';     //pc, browser or all
+const urlRelease = 'https://free-to-play-games-database.p.rapidapi.com/api/games?sort-by=release-date';
+const urlCatagory = 'https://free-to-play-games-database.p.rapidapi.com/api/games?category='; 
+//mmorpg, shooter, strategy, moba, racing, sports, social, sandbox, open-world, survival, pvp, pve, pixel, 
+// voxel, zombie, turn-based, first-person, third-Person, top-down, tank, space, sailing, side-scroller, 
+// superhero, permadeath, card, battle-royale, mmo, mmofps, mmotps, 3d, 2d, anime, fantasy, sci-fi, fighting, 
+// action-rpg, action, military, martial-arts, flight, low-spec, tower-defense, horror, mmorts
 let games;
+let gamesLoadLimit = 6;
+let currentFilter;
+let currentCatagory = "";
 
-async function renderGames() {
+async function renderGames(currentFilter) {
     const gamesWrapper = document.querySelector('.games');
+    let sortBy = urlAll;
+
+    currentCatagory = filterGamesCatagory();
 
     gamesWrapper.classList += ' games__loading';
 
-    if (!games) {
-        games = await getGames();
+    if (currentFilter === "browser") {
+        sortBy = urlPlatform + "browser" + currentCatagory;
+        console.log(sortBy);
     }
+    else if (currentFilter === "pc") {
+        sortBy = urlPlatform + "pc" + currentCatagory;
+        console.log(sortBy);
+    }
+    else if (currentFilter === "recent") {
+        sortBy = urlRelease;
+    }
+    else {
+        sortBy = urlAll;
+    }
+
+    games = await getGames(sortBy);
 
     gamesWrapper.classList.remove('games__loading');
 
-    // if (filter === "BROWSER") {
-    //     books.sort((a, b) => (a.salePrice || a.originalPrice) - (b.salePrice || b.originalPrice));
-    // }
-    // else if (filter === "PC") {
-    //     books.sort((a, b) => (b.salePrice || b.originalPrice) - (a.salePrice || a.originalPrice));
-    // }
-    // else if (filter === "RECENT") {
-    //     books.sort((a, b) => b.rating - a.rating);
-    // }
-
-    const GamesHTML = games.slice(0, 6).map(game => {
+    const GamesHTML = games.slice(0, gamesLoadLimit).map(game => {
     return `<div class="game">
         <figure class="game__img--wrapper">
                 <a href="${game.game_url}" target="_blank" class="">
@@ -49,7 +65,8 @@ async function renderGames() {
                 ${game.developer}
             </div>
             <div class="game__release-date">
-                ${game.release_date}
+                ${game.release_date} -
+                ${game.publisher}
             </div>
         </div>
     </div>`;
@@ -66,19 +83,36 @@ function platformsHTML(gamePlatform) {
     else if (gamePlatform === 'Web Browser') {
         return '<i class="fa-solid fa-window-maximize"></i>';
     } else {
-        return '<i class="fa-brands fa-windows"></i><i class="fa-solid fa-window-maximize"></i>'
+        return '<i class="fa-brands fa-windows"></i><span> </span><i class="fa-solid fa-window-maximize"></i>'
     }
 }
 
 function filterGames(event) {
-  renderGames(event.target.value);
+    gamesLoadLimit = 6;
+    currentFilter = event.target.value;
+    renderGames(currentFilter);
 }
 
-async function getGames() {
-    const response = await fetch(url, options);
+function filterGamesCatagory() {
+    let text1 = document.getElementById('input__area').value;
+    if (text1) {
+        return '&catagory='+text1+'&sort-by=release-date';
+    } else {
+        return "";
+    }
+}
+
+function loadMoreGames() {
+    console.log("load more pushed")
+    gamesLoadLimit += 6;
+    renderGames(currentFilter);
+}
+
+async function getGames(sortType) {
+    const response = await fetch(sortType, options);
     const result = await response.json();
-    return result;
     console.log(result);
+    return result;
 }
 
 setTimeout(() => {

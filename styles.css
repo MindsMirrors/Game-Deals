@@ -269,7 +269,7 @@ section {
 .menu__link--primary {
     background-color: #17b8a6;
     border-radius: 50px;
-    padding: 24px 80px;
+    padding: 24px 24px;
     color: white;
     transition: all 300ms ease;
 }
@@ -351,7 +351,7 @@ section {
     justify-content: center;
 }
 
-.input__area {
+#input__area {
     background-color: #fff;
     border-radius: 20px;
     border: 1px solid #0a1f44;
@@ -528,21 +528,26 @@ select {
     border-radius: 4px;
     overflow: hidden;
     display: flex;
+    justify-content: center;
 }
 
 .game__title-platform {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     margin-bottom: 8px;
 }
 
 .game__title,
 .game__platform {
+    margin-right: 4px;
     font-size: 24px;
 }
 
 .game__dev-release {
-    margin-bottom: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .game__developer {
@@ -551,7 +556,12 @@ select {
 }
 
 .game__release-date {
-    font-size: 16px;
+    font-size: 12px;
+}
+
+.load__btn {
+    display: flex;
+    justify-content: center;
 }
 
 @keyframes rotate {
@@ -562,6 +572,12 @@ select {
   100% {
     transform: rotate(360deg);
   }
+}
+
+@media (max-width: 1220px) {
+    .game {
+        width: calc(50%);
+    }
 }
 
 /* LAPTOPS & DESKTOPS */
@@ -580,6 +596,17 @@ select {
 
     .btn__menu--open {
         display: block;
+    }
+
+    .game {
+        width: 100%;
+    }
+    .game__title-platform {
+        justify-content: center;
+    }
+
+    .game__title {
+        margin-right: 36px;
     }
 }
 
@@ -625,5 +652,12 @@ select {
 
     .input__btn:hover {
         border: 8px solid #38bdf8;
+    }
+
+    .container {
+        padding: 24px;
+    }
+    .game {
+        padding: 8px;
     }
 }
