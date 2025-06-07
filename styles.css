@@ -621,8 +621,9 @@ select {
 }
 
 #load__btn {
-    margin-top: 20px;;
+    margin-top: 36px;
     width: 160px;
+    padding:12px;
     font-size: 20px;
     color: #fff;
     border-radius: 20px;
@@ -732,6 +733,6 @@ select {
     }
 
     .container {
-        padding: 12px;
+        padding: 24px;
     }
 }
