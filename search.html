@@ -26,6 +26,11 @@
                     nav__link
                     nav__link--hover-effect
                     no-cursor
+                    ">About</a></li>
+                <li><a href="" class="
+                    nav__link
+                    nav__link--hover-effect
+                    no-cursor
                     ">Contact</a></li>
                 <li class="nav__link" onclick="toggleContrast()">
                     <a href="#"class="">
@@ -43,6 +48,9 @@
                 <ul class="menu__links">
                     <li class="menu__list">
                         <a href="./index.html" class="menu__link" onclick="closeMenu()">Home</a>
+                    </li>
+                    <li class="menu__list">
+                        <a href="" class="menu__link no-cursor" onclick="closeMenu()">About</a>
                     </li>
                     <li class="menu__list">
                         <a class="menu__link no-cursor" onclick="closeMenu()">Contact</a>
@@ -69,7 +77,7 @@
             <h2 class="search__description">Browse Games</h2>
             <div class="input__wrapper">
                 <input id="input__area" type="text" placeholder="Search by Game Genre">
-                <button class="input__btn" onclick="filterGamesCatagory()">
+                <button class="input__btn" onclick="filterGamesCatagory(currentFilter)">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
             </div>
@@ -83,16 +91,17 @@
                         <h2>Top Results:</h2>
                          <select id="filter" onchange="filterGames(event)">
                             <option value="" disabled selected>Sort</option>
-                            <option value="browser">Browser</option>
-                            <option value="pc">PC</option>
-                            <option value="recent">Most Recent</option>
+                            <option value="ALL">All</option>
+                            <option value="BROWSER">Browser</option>
+                            <option value="PC">PC</option>
+                            <option value="RECENT">Most Recent</option>
                         </select>
                     </div>
                     <div class="games">
                         <i class="fa-solid fa-spinner games__loading--spinner"></i>
                     </div>
-                    <div class="load__btn">
-                        <button onclick="loadMoreGames()">Load More</button>
+                    <div class="load__btn--wrapper">
+                        <button id="load__btn" onclick="loadMoreGames()">Load More</button>
                     </div>
                 </div>
             </div>

@@ -22,58 +22,65 @@ async function renderGames(currentFilter) {
     const gamesWrapper = document.querySelector('.games');
     let sortBy = urlAll;
 
-    currentCatagory = filterGamesCatagory();
-
     gamesWrapper.classList += ' games__loading';
 
-    if (currentFilter === "browser") {
-        sortBy = urlPlatform + "browser" + currentCatagory;
-        console.log(sortBy);
+    if (currentFilter === "ALL") {
+        sortBy = urlAll;
     }
-    else if (currentFilter === "pc") {
-        sortBy = urlPlatform + "pc" + currentCatagory;
-        console.log(sortBy);
+    else if (currentFilter === "BROWSER") {
+        sortBy = urlPlatform + "browser";
     }
-    else if (currentFilter === "recent") {
+    else if (currentFilter === "PC") {
+        sortBy = urlPlatform + "pc";
+    }
+    else if (currentFilter === "RECENT") {
         sortBy = urlRelease;
     }
     else {
         sortBy = urlAll;
     }
-
+    
     games = await getGames(sortBy);
+
+    games = filterCatagory();
+
+    loadButton();
 
     gamesWrapper.classList.remove('games__loading');
 
-    const GamesHTML = games.slice(0, gamesLoadLimit).map(game => {
-    return `<div class="game">
-        <figure class="game__img--wrapper">
-                <a href="${game.game_url}" target="_blank" class="">
-                    <img class="game__img" src="${game.thumbnail}" alt="">
-                </a>
-        </figure>
-        <div class="game__title-platform">
-                <div class="game__title">
-                    ${game.title}
-                </div>
-                <div class="game__platform">
-                    ${platformsHTML(game.platform)}
-                </div>
-            </div>
-        <div class="game__dev-release">
-            <div class="game__developer">
-                ${game.developer}
-            </div>
-            <div class="game__release-date">
-                ${game.release_date} -
-                ${game.publisher}
-            </div>
-        </div>
-    </div>`;
-  })
-  .join("");
-
-  gamesWrapper.innerHTML = GamesHTML;
+    if (games.length > 0) {
+        const GamesHTML = games.slice(0, gamesLoadLimit).map(game => {
+            return `<div class="game game__click">
+                        <a href="${game.game_url}" target="_blank" class="">
+                            <figure class="game__img--wrapper">
+                                <img class="game__img" src="${game.thumbnail}" alt="">
+                            </figure>
+                            <div class="game__title-platform">
+                                <div class="game__title">
+                                    ${game.title}
+                                </div>
+                                <div class="game__platform">
+                                    ${platformsHTML(game.platform)}
+                                </div>
+                            </div>
+                            <div class="game__dev-release">
+                                <div class="game__developer">
+                                    ${game.developer}
+                                </div>
+                                <div class="game__release-date">
+                                    ${game.release_date} -
+                                    ${game.publisher}
+                                </div>
+                            </div>
+                        </a>
+                    </div>`;
+        })
+        .join("");
+        gamesWrapper.innerHTML = GamesHTML;
+    } 
+    else {
+        gamesWrapper.innerHTML = `<h3 class="no-game"> No Games Found </h3>`;
+    }    
 }
 
 function platformsHTML(gamePlatform) {
@@ -93,25 +100,50 @@ function filterGames(event) {
     renderGames(currentFilter);
 }
 
-function filterGamesCatagory() {
-    let text1 = document.getElementById('input__area').value;
+function filterCatagory() {
+    let text1 = capitalizeFirstLetter(document.getElementById('input__area').value);
+    let gamesByCatagory = [];
     if (text1) {
-        return '&catagory='+text1+'&sort-by=release-date';
-    } else {
-        return "";
+        gamesByCatagory = games.filter((element) => {
+            if (element.genre === text1) {
+                return true
+            }
+        });
+        return gamesByCatagory;
+    }
+    else {
+        return games;
     }
 }
 
+function filterGamesCatagory() {
+    gamesLoadLimit = 6;
+    renderGames(currentFilter);
+}
+
 function loadMoreGames() {
-    console.log("load more pushed")
     gamesLoadLimit += 6;
     renderGames(currentFilter);
+}
+
+function loadButton() {
+    if (games.length < gamesLoadLimit || games.length < 1) {
+        document.getElementById('load__btn').setAttribute('disabled', "");
+    }
+    else {
+        if (document.getElementById('load__btn').hasAttribute('disabled')) {
+            document.getElementById('load__btn').removeAttribute('disabled');
+        }
+    }
+}
+
+function capitalizeFirstLetter(val) {
+    return String(val).charAt(0).toUpperCase() + String(val).slice(1);
 }
 
 async function getGames(sortType) {
     const response = await fetch(sortType, options);
     const result = await response.json();
-    console.log(result);
     return result;
 }
 
