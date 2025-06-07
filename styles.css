@@ -451,7 +451,7 @@ section {
 .search__container {
     width: 100%;
     max-width: 800px;
-    padding: 0 20px 80px;
+    padding: 0 20px;
     margin: 0 auto;
     height: 100%;
     display: flex;
