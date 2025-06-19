@@ -105,7 +105,7 @@ function filterCatagory() {
     let gamesByCatagory = [];
     if (text1) {
         gamesByCatagory = games.filter((element) => {
-            if (element.genre === text1) {
+            if (element.title === text1) {
                 return true
             }
         });
