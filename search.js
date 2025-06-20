@@ -101,17 +101,12 @@ function filterGames(event) {
 }
 
 function filterCatagory() {
-    let text1 = capitalizeFirstLetter(document.getElementById('input__area').value);
-    let gamesByCatagory = [];
-    if (text1) {
-        gamesByCatagory = games.filter((element) => {
-            if (element.title === text1) {
-                return true
-            }
-        });
-        return gamesByCatagory;
-    }
-    else {
+    const inputValue = document.getElementById('input__area').value.trim().toLowerCase();
+    if (inputValue) {
+        return games.filter((game) =>
+            game.title.toLowerCase().includes(inputValue)
+        );
+    } else {
         return games;
     }
 }
